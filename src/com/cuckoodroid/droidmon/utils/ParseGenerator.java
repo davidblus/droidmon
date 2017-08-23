@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -171,6 +173,11 @@ public class ParseGenerator {
 		hookData.put("method", param.method.getName());
 		hookData.put("timestamp", System.currentTimeMillis());
 		hookData.put("type", type.toString());
+		
+		//增加栈跟踪信息
+		StringWriter sw = new StringWriter();
+		new Exception("davidblus").printStackTrace(new PrintWriter(sw));
+		hookData.put("exception", sw.toString());
 		return hookData;
 	}
 
